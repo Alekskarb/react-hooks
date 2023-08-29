@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 export function useToggle(defaultValue) {
     const [value, setValue] = useState(defaultValue)
-    function toggleValue() {
+    function toggleValue(value) {
         setValue((prevState) => {
             return typeof value === 'boolean' ? value : !prevState
         })

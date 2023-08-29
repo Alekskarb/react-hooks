@@ -1,18 +1,21 @@
 import './App.css';
-import React, {useState} from "react";
-import {useLocalStorage} from "./useLocalStorage";
-import {useUpdateLogger} from "./useUpdateLogger";
+import React, {useEffect, useState} from "react";
+// import {useTimeOut} from "./useTimeOut";
+import {useDebounce} from "./useDebounce";
+import {useUpdateEffect} from "./useUpdateEffect";
+import {useArray} from "./useArray";
+// import {useLocalStorage} from "./useLocalStorage";
+// import {useUpdateLogger} from "./useUpdateLogger";
+// import {useToggle} from "./useToggle";
 
 function App() {
-    const [value, setValue] = useLocalStorage('name', '');
-    useUpdateLogger(value);
+    const {array, push} = useArray([1,2,3,4,5,6]);
+
     return (
         <div className="App">
             <header className='App-header'>
-               <p>{value}</p>
-                <button> toggle </button>
-                <button> set true </button>
-                <button> set false </button>
+               <p> [{ array.join(',') }] </p>
+                <button onClick={() => push(array.length)}> push </button>
             </header>
         </div>
     );
@@ -432,3 +435,79 @@ export default App;
 //         </div>
 //     );
 // }
+
+// work under USE_TOGGLE custom hook
+
+// function App() {
+//     const [state, setState] = useToggle(false);
+//     return (
+//         <div className="App">
+//             <header className='App-header'>
+//                 <p>{state.toString()}</p>
+//                 <button onClick={() => setState()}> toggle </button>
+//                 <button onClick={() => setState(true)}> set true </button>
+//                 <button onClick={() => setState(false)}> set false </button>
+//             </header>
+//         </div>
+//     );
+// }
+
+// use  timeout OWN HOOK
+
+// const [count, setCount] = useState(10);
+//
+// const {set, clear} = useTimeOut(() => {
+//     setCount(0);
+// }, 1000)
+//
+// return (
+//     <div className="App">
+//         <header className='App-header'>
+//             <p>{count}</p>
+//             <button onClick={() => setCount((v) => v + 1)}> Increment </button>
+//             <button onClick={() => clear()}> Stop timeout</button>
+//             <button onClick={() => set()}> Run timeout</button>
+//         </header>
+//     </div>
+// );
+
+// work under USE_DEBOUNCE custom hook
+
+// const [count, setCount] = useState(10);
+// const [value, setValue] = useState('');
+//
+// useDebounce(() => {
+//     // setCount(0);
+//     alert(value);
+//     console.log('get API')
+// }, 1000, [value])
+//
+// return (
+//     <div className="App">
+//         <header className='App-header'>
+//             <p>{count}</p>
+//             <input type="text" onChange={(e) => setValue(e.target.value)} value={value}/>
+//             <button onClick={() => setCount((v) => v + 1)}> Increment </button>
+//         </header>
+//     </div>
+// );
+
+// work under USE_UPDATE-EFFECT custom hook
+
+// const [count, setCount] = useState(10);
+//
+// useUpdateEffect(() => {
+//     // setCount(0);
+//     alert(count);
+//     // console.log('get API')
+// }, [count])
+//
+// return (
+//     <div className="App">
+//         <header className='App-header'>
+//             <p>{count}</p>
+//             {/*<input type="text" onChange={(e) => setValue(e.target.value)} value={value}/>*/}
+//             <button onClick={() => setCount((v) => v + 1)}> Increment </button>
+//         </header>
+//     </div>
+// );
