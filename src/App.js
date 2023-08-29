@@ -9,7 +9,10 @@ function App() {
     return (
         <div className="App">
             <header className='App-header'>
-                <input type="text" value={value} onChange={(e) => setValue(e.target.value)}/>
+               <p>{value}</p>
+                <button> toggle </button>
+                <button> set true </button>
+                <button> set false </button>
             </header>
         </div>
     );
@@ -412,6 +415,20 @@ export default App;
 //             <div>
 //                 <List input={input}/>
 //             </div>
+//         </div>
+//     );
+// }
+
+// create OWN HOOK useLocalStorage & useUpdateLogger
+
+// function App() {
+//     const [value, setValue] = useLocalStorage('name', '');
+//     useUpdateLogger(value);
+//     return (
+//         <div className="App">
+//             <header className='App-header'>
+//                 <input type="text" value={value} onChange={(e) => setValue(e.target.value)}/>
+//             </header>
 //         </div>
 //     );
 // }
