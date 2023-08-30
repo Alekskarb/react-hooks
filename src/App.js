@@ -4,18 +4,20 @@ import React, {useEffect, useState} from "react";
 import {useDebounce} from "./useDebounce";
 import {useUpdateEffect} from "./useUpdateEffect";
 import {useArray} from "./useArray";
+import {useThrottle} from "./useThrottle";
 // import {useLocalStorage} from "./useLocalStorage";
 // import {useUpdateLogger} from "./useUpdateLogger";
 // import {useToggle} from "./useToggle";
 
 function App() {
-    const {array, push} = useArray([1,2,3,4,5,6]);
+    const [value, setValue] = useState('');
+    const throttledValue = useThrottle(value, 1000)
 
     return (
         <div className="App">
             <header className='App-header'>
-               <p> [{ array.join(',') }] </p>
-                <button onClick={() => push(array.length)}> push </button>
+                <input type="text" onChange={(e) => setValue(e.target.value)}/>
+                <p> {throttledValue} </p>
             </header>
         </div>
     );
@@ -508,6 +510,26 @@ export default App;
 //             <p>{count}</p>
 //             {/*<input type="text" onChange={(e) => setValue(e.target.value)} value={value}/>*/}
 //             <button onClick={() => setCount((v) => v + 1)}> Increment </button>
+//         </header>
+//     </div>
+// );
+
+// work with USE_ARRAY custom hook
+
+// // const {array, push, update, clear} = useArray([1,2,3,4,5,6]);
+// const [values, {array, push, update, filter, clear, remove}] = useArray([1,2,3,4,5,6]);
+//
+// return (
+//     <div className="App">
+//         <header className='App-header'>
+//             {/*<p> [{ array.join(',') }] </p>*/}
+//             <p> [{ values.join(',') }] </p>
+//             {/*<button onClick={() => push(array.length)}> push </button>*/}
+//             <button onClick={() => push(values.length)}> push </button>
+//             <button onClick={() => update(3, 10)}> update </button>
+//             <button onClick={() => filter(3, 10)}> update </button>
+//             <button onClick={() => remove(1)}> remove 1 index</button>
+//             <button onClick={() => clear()}> clear </button>
 //         </header>
 //     </div>
 // );
