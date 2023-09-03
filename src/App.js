@@ -1,24 +1,90 @@
 import './App.css';
-import React, {useEffect, useState} from "react";
+import React, {useReducer, useState} from "react";
 // import {useTimeOut} from "./useTimeOut";
-import {useDebounce} from "./useDebounce";
-import {useUpdateEffect} from "./useUpdateEffect";
-import {useArray} from "./useArray";
-import {useThrottle} from "./useThrottle";
+// import {useDebounce} from "./useDebounce";
+// import {useUpdateEffect} from "./useUpdateEffect";
+// import {useArray} from "./useArray";
+// import {useThrottle} from "./useThrottle";
 // import {useLocalStorage} from "./useLocalStorage";
 // import {useUpdateLogger} from "./useUpdateLogger";
 // import {useToggle} from "./useToggle";
+const initState = {
+    count: 0,
+    name: 'Alex'
+}
+
+const reducer = (state, action) => {
+    console.log('action: ', action)
+    switch (action.type) {
+        case 'INC':
+            return {
+                ...state,
+                count: state.count + action.payload
+            }
+        case  'DESC':
+            return {
+                ...state,
+                count: state.count - action.payload
+            }
+        case  'RESET':
+            return {
+                ...state,
+                count: 0
+            }
+            case  'CHANGE':
+            return {
+                ...state,
+                name: action.payload
+            }
+        default:
+            throw new Error()
+    }
+}
 
 function App() {
-    const [value, setValue] = useState('');
-    const throttledValue = useThrottle(value, 1000)
+
+// const [state, dispatch] = useReducer(() => {}, initState);
+    const [state, dispatch] = useReducer(reducer, initState);
+    console.log('state: ', state)
+
+    const decrease = () => {
+        dispatch({
+            type: 'DESC',
+            payload: 10
+        });
+    }
+    const reset = () => {
+        dispatch({
+            type: 'RESET',
+        });
+    }
+    const increase = () => {
+        dispatch({
+            type: 'INC',
+            payload: 5
+        });
+    }
+    const change = () => {
+        dispatch({
+            type: 'CHANGE',
+            payload: 'EL'
+        });
+    }
 
     return (
         <div className="App">
-            <header className='App-header'>
-                <input type="text" onChange={(e) => setValue(e.target.value)}/>
-                <p> {throttledValue} </p>
-            </header>
+            <p>{state.count}</p>
+            <button onClick={decrease}>
+                <div><span>-</span></div>
+            </button>
+            <button onClick={reset}>
+                <div><span>reset</span></div>
+            </button>
+            <button onClick={increase}>
+                <div><span>+</span></div>
+            </button><button onClick={change}>
+                <div><span>name</span></div>
+            </button>
         </div>
     );
 }
@@ -530,6 +596,20 @@ export default App;
 //             <button onClick={() => filter(3, 10)}> update </button>
 //             <button onClick={() => remove(1)}> remove 1 index</button>
 //             <button onClick={() => clear()}> clear </button>
+//         </header>
+//     </div>
+// );
+
+// work with USE_THROTTLE custom hook
+
+// const [value, setValue] = useState('');
+// const throttledValue = useThrottle(value, 1000)
+//
+// return (
+//     <div className="App">
+//         <header className='App-header'>
+//             <input type="text" onChange={(e) => setValue(e.target.value)}/>
+//             <p> {throttledValue} </p>
 //         </header>
 //     </div>
 // );
